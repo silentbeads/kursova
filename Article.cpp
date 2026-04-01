@@ -125,11 +125,12 @@ int interpolationSearch(Article** arr, int size, int key) {
             if (arr[low]->authorsCount == key) return low;
             return -1;
         }
-        if (arr[low]->authorsCount == arr[high]->authorsCount) {
-            if (arr[low]->authorsCount == key) return low;
-            return -1;
-        }
         double posDouble = (double)(key - arr[low]->authorsCount) / (arr[high]->authorsCount - arr[low]->authorsCount);
+        int pos = low + (int)((high - low) * posDouble);
+
+        if (arr[pos]->authorsCount == key) return pos;
+        if (arr[pos]->authorsCount < key) low = pos + 1;
+        else high = pos - 1;
     }
     return -1;
 }
